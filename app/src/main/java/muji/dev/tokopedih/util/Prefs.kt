@@ -1,23 +1,22 @@
 package muji.dev.tokopedih.util
 
-import android.app.Activity
-import android.content.Context
-import android.content.SharedPreferences
 
-class Prefs(activity: Activity) {
+import com.chibatching.kotpref.KotprefModel
+import com.inyongtisto.myhelper.extension.toJson
+import com.inyongtisto.myhelper.extension.toModel
+import muji.dev.tokopedih.core.data.source.model.User
 
-    private var sp: SharedPreferences? = null
-    private val login = "login"
+object Prefs: KotprefModel() {
 
-    init {
-        sp = activity.getSharedPreferences("MYPREF", Context.MODE_PRIVATE)
+    var isLogin by booleanPref(false)
+    var user by stringPref()
+
+    fun setUser(data: User?) {
+        user = data.toJson()
     }
 
-    fun setIsLogin(value: Boolean) {
-        sp!!.edit().putBoolean(login, value).apply()
-    }
-
-    fun getIsLogin(): Boolean {
-        return sp!!.getBoolean(login, false)
+    fun getUser(): User? {
+        if (user.isEmpty()) return null
+        return user.toModel(User::class.java)
     }
 }

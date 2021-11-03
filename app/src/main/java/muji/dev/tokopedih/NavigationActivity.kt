@@ -7,10 +7,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import muji.dev.tokopedih.databinding.ActivityNavigationBinding
-import muji.dev.tokopedih.ui.login.LoginActivity
+import muji.dev.tokopedih.ui.auth.LoginActivity
 import muji.dev.tokopedih.util.Prefs
 
 class NavigationActivity : AppCompatActivity() {
@@ -28,18 +27,15 @@ class NavigationActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_navigation)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_keranjang, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        val appBarConfiguration = AppBarConfiguration(setOf(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_keranjang, R.id.navigation_notifications))
+ //       setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setOnItemSelectedListener {
 
             if (it.itemId == R.id.navigation_notifications) {
-                val s = Prefs(this)
-                if (s.getIsLogin()) {
+               // val s = Prefs(this)
+                if (Prefs.isLogin) {
                     Log.d("TAG", "sudah login")
                     navController.navigate(it.itemId)
                 } else {

@@ -26,10 +26,6 @@ class KeranjangFragment : Fragment() {
         keranjangBinding = FragmentKeranjangBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
         return root
     }
 

@@ -23,7 +23,6 @@
         android:label="Keranjang"
         tools:layout="@layout/fragment_keranjang" />
 
-
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="muji.dev.tokopedih.ui.notifications.NotificationsFragment"

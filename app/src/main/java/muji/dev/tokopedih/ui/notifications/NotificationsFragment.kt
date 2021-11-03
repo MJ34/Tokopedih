@@ -8,8 +8,11 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.inyongtisto.myhelper.extension.pushActivity
+import muji.dev.tokopedih.NavigationActivity
 import muji.dev.tokopedih.R
 import muji.dev.tokopedih.databinding.FragmentNotificationsBinding
+import muji.dev.tokopedih.util.Prefs
 
 class NotificationsFragment : Fragment() {
 
@@ -31,11 +34,27 @@ class NotificationsFragment : Fragment() {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        setUser()
+        mainButton()
         return root
+    }
+
+    private fun mainButton() {
+        binding.btnLogout.setOnClickListener {
+            Prefs.isLogin = false
+            pushActivity(NavigationActivity::class.java)
+        }
+    }
+
+    private fun setUser() {
+        val user = Prefs.getUser()
+        if (user != null) {
+            binding.apply {
+                tvName.text = user.name
+                tvEmail.text = user.email
+                tvPhone.text = user.phone
+            }
+        }
     }
 
     override fun onDestroyView() {
